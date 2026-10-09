@@ -1,0 +1,106 @@
+/* 试客商城 TestBuy Mall · 基础样式 */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: "Microsoft YaHei", system-ui, sans-serif; background: #f5f6f8; color: #1f2937; min-height: 100vh; display: flex; flex-direction: column; }
+
+.container { width: 100%; max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+
+/* 导航 */
+.navbar { background: #1e3a8a; color: #fff; padding: 10px 0; }
+.nav-inner { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
+.brand { color: #fff; font-size: 20px; font-weight: 700; text-decoration: none; white-space: nowrap; }
+.brand-en { font-size: 12px; color: #93c5fd; margin-left: 6px; font-weight: 400; }
+.search-form { display: flex; flex: 1 1 240px; max-width: 420px; }
+.search-form input { flex: 1; padding: 8px 12px; border: none; border-radius: 6px 0 0 6px; font-size: 14px; }
+.search-form button { padding: 8px 16px; border: none; background: #f59e0b; color: #fff; border-radius: 0 6px 6px 0; cursor: pointer; font-size: 14px; }
+.nav-links { display: flex; align-items: center; gap: 14px; margin-left: auto; flex-wrap: wrap; }
+.nav-links a { color: #dbeafe; text-decoration: none; font-size: 14px; }
+.nav-links a:hover { color: #fff; }
+.nav-user { color: #fbbf24; font-size: 14px; }
+
+main { flex: 1; padding: 20px 0 40px; }
+
+/* 提示 */
+.flash-area { margin-bottom: 14px; }
+.flash { padding: 10px 14px; border-radius: 6px; margin-bottom: 8px; font-size: 14px; }
+.flash-success { background: #dcfce7; color: #14532d; }
+.flash-danger { background: #fee2e2; color: #7f1d1d; }
+.flash-warning { background: #fef3c7; color: #78350f; }
+.flash-info { background: #dbeafe; color: #1e3a8a; }
+
+/* 首页 */
+.hero { background: linear-gradient(120deg, #1e3a8a, #3b82f6); color: #fff; border-radius: 12px; padding: 28px 24px; margin-bottom: 18px; }
+.hero h1 { font-size: 24px; margin-bottom: 6px; }
+.hero p { font-size: 14px; opacity: .9; }
+.category-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+.chip { padding: 6px 14px; background: #fff; border: 1px solid #e5e7eb; border-radius: 999px; text-decoration: none; color: #374151; font-size: 13px; }
+.chip-active { background: #1e3a8a; color: #fff; border-color: #1e3a8a; }
+
+.product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 14px; }
+.card { background: #fff; border-radius: 10px; overflow: hidden; text-decoration: none; color: inherit; border: 1px solid #eef0f3; transition: box-shadow .15s; }
+.card:hover { box-shadow: 0 4px 14px rgba(0,0,0,.08); }
+.thumb, .detail-thumb { background: #e0e7ff; color: #1e3a8a; display: flex; align-items: center; justify-content: center; font-size: 40px; font-weight: 700; }
+.thumb { height: 130px; }
+.card-body { padding: 10px 12px; }
+.p-name { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.p-category { font-size: 12px; color: #6b7280; }
+.p-price { color: #dc2626; font-weight: 700; font-size: 16px; margin: 6px 0 2px; }
+.p-stock { font-size: 12px; color: #9ca3af; }
+.empty { text-align: center; padding: 60px 0; color: #6b7280; font-size: 15px; }
+.pager { display: flex; justify-content: center; align-items: center; gap: 14px; margin-top: 22px; }
+.pager a { text-decoration: none; color: #1e3a8a; font-size: 14px; }
+.page-info { font-size: 14px; color: #6b7280; }
+
+/* 详情 */
+.detail { display: flex; gap: 24px; background: #fff; border-radius: 12px; padding: 24px; flex-wrap: wrap; }
+.detail-thumb { width: 260px; height: 260px; border-radius: 10px; flex: 0 0 260px; }
+.detail-info { flex: 1; min-width: 260px; }
+.detail-info h1 { font-size: 22px; margin-bottom: 8px; }
+.detail-info .p-price { font-size: 24px; }
+.p-desc { color: #4b5563; font-size: 14px; margin: 12px 0; line-height: 1.7; }
+.buy-form { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+.buy-form input[type=number], .qty-input { width: 70px; padding: 8px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; }
+
+/* 表单 */
+.auth-card { max-width: 400px; margin: 30px auto; background: #fff; border-radius: 12px; padding: 26px; }
+.auth-card h2, .page-title { margin-bottom: 14px; }
+.auth-card form, .address-form { display: flex; flex-direction: column; gap: 12px; }
+label { font-size: 14px; color: #374151; }
+.auth-card input, .address-form input, .grid-form input { padding: 9px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; width: 100%; }
+.auth-tip { margin-top: 14px; font-size: 13px; color: #6b7280; text-align: center; }
+.auth-tip a { color: #1e3a8a; }
+
+.btn-primary { display: inline-block; background: #1e3a8a; color: #fff; border: none; padding: 10px 22px; border-radius: 6px; cursor: pointer; font-size: 14px; text-decoration: none; text-align: center; }
+.btn-primary:hover { background: #1e40af; }
+.btn-plain { display: inline-block; background: #f3f4f6; color: #374151; padding: 10px 22px; border-radius: 6px; text-decoration: none; font-size: 14px; }
+.btn-mini { padding: 5px 10px; border: 1px solid #d1d5db; background: #fff; border-radius: 5px; font-size: 13px; cursor: pointer; }
+.btn-danger { color: #b91c1c; border-color: #fecaca; }
+.inline-form { display: inline; }
+
+/* 表格 */
+.table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 10px; overflow: hidden; font-size: 14px; }
+.table th, .table td { padding: 11px 14px; text-align: left; border-bottom: 1px solid #f0f1f3; }
+.table th { background: #f8fafc; color: #475569; font-weight: 600; }
+.table a { color: #1e3a8a; }
+.status { background: #eff6ff; color: #1e40af; padding: 3px 10px; border-radius: 999px; font-size: 12px; }
+.cart-footer, .checkout-summary, .order-summary { display: flex; justify-content: flex-end; align-items: center; gap: 16px; margin-top: 16px; }
+.total { font-size: 17px; font-weight: 700; color: #dc2626; }
+
+/* 下单成功 */
+.success-card { max-width: 520px; margin: 40px auto; background: #fff; border-radius: 12px; padding: 34px; text-align: center; }
+.success-icon { width: 56px; height: 56px; margin: 0 auto 14px; background: #16a34a; color: #fff; border-radius: 50%; font-size: 28px; line-height: 56px; }
+.success-card p { font-size: 14px; color: #4b5563; margin-bottom: 8px; }
+.actions { display: flex; justify-content: center; gap: 12px; margin-top: 18px; }
+
+/* 后台 */
+.admin-add { background: #fff; border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+.admin-add h3 { font-size: 15px; margin-bottom: 10px; }
+.grid-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+.inline-label { display: flex; align-items: center; gap: 6px; }
+.admin-edit summary { cursor: pointer; color: #1e3a8a; font-size: 13px; }
+.admin-edit .grid-form { margin-top: 8px; padding: 10px; background: #f8fafc; border-radius: 8px; }
+
+/* 错误页 */
+.error-card { max-width: 420px; margin: 60px auto; background: #fff; border-radius: 12px; padding: 30px; text-align: center; }
+.error-code { font-size: 56px; font-weight: 800; color: #1e3a8a; }
+
+.footer { background: #111827; color: #9ca3af; font-size: 12px; text-align: center; padding: 14px 0; }

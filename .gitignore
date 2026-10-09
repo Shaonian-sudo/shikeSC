@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+
+# 测试缓存与产物
+.pytest_cache/
+testbuy-framework/screenshots/
+testbuy-framework/logs/
+testbuy-framework/reports/
+testbuy-framework/tools/
+
+# 浏览器驱动（体积大，按需下载）
+testbuy-framework/drivers/
+
+# 运行时数据库
+testbuy-mall/instance/
+
+# 旧版/中间产物
+开题报告_基于Selenium与Pytest的*.docx
+毕业设计题目.png
+
+# Word 临时锁文件
+~$*.docx

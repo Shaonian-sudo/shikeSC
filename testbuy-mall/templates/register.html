@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-card" data-testid="auth-card">
+  <h2>注册</h2>
+  <form method="post" data-testid="register-form">
+    <label>用户名
+      <input type="text" name="username" data-testid="register-username" required>
+    </label>
+    <label>密码（至少 6 位）
+      <input type="password" name="password" data-testid="register-password" required>
+    </label>
+    <label>邮箱
+      <input type="email" name="email" data-testid="register-email">
+    </label>
+    <button type="submit" class="btn-primary" data-testid="register-submit">注 册</button>
+  </form>
+  <p class="auth-tip">已有账号？<a href="{{ url_for('login') }}" data-testid="go-login">去登录</a></p>
+</div>
+{% endblock %}

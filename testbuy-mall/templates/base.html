@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>试客商城 TestBuy Mall</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="navbar">
+  <div class="container nav-inner">
+    <a class="brand" data-testid="nav-home" href="{{ url_for('index') }}">试客商城<span class="brand-en">TestBuy Mall</span></a>
+    <form class="search-form" method="get" action="{{ url_for('index') }}" data-testid="search-form">
+      <input type="text" name="keyword" value="{{ keyword or '' }}" placeholder="搜索商品…"
+             data-testid="search-input">
+      <button type="submit" data-testid="search-btn">搜索</button>
+    </form>
+    <nav class="nav-links">
+      <a href="{{ url_for('cart') }}" data-testid="nav-cart">购物车</a>
+      <a href="{{ url_for('orders') }}" data-testid="nav-orders">我的订单</a>
+      {% if current_user %}
+        {% if current_user['is_admin'] %}
+          <a href="{{ url_for('admin_products') }}" data-testid="nav-admin">后台管理</a>
+        {% endif %}
+        <span class="nav-user" data-testid="nav-username">{{ current_user['username'] }}</span>
+        <a href="{{ url_for('logout') }}" data-testid="nav-logout">退出</a>
+      {% else %}
+        <a href="{{ url_for('login') }}" data-testid="nav-login">登录</a>
+        <a href="{{ url_for('register') }}" data-testid="nav-register">注册</a>
+      {% endif %}
+    </nav>
+  </div>
+</header>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-area" data-testid="flash-area">
+        {% for category, msg in messages %}
+          <div class="flash flash-{{ category }}" data-testid="flash-message">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+  <div class="container">试客商城 TestBuy Mall · 电商 Web 系统 UI 自动化测试框架被测系统</div>
+</footer>
+</body>
+</html>

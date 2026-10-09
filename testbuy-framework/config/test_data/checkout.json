@@ -1,0 +1,23 @@
+[
+  {
+    "scenario": "完整收货信息下单",
+    "receiver": "张三",
+    "phone": "13800138000",
+    "address": "重庆市渝北区测试大道 1 号",
+    "expect": "success"
+  },
+  {
+    "scenario": "缺少收货人",
+    "receiver": "",
+    "phone": "13800138000",
+    "address": "重庆市渝北区测试大道 1 号",
+    "expect": "fail"
+  },
+  {
+    "scenario": "缺少收货地址",
+    "receiver": "张三",
+    "phone": "13800138000",
+    "address": "",
+    "expect": "fail"
+  }
+]

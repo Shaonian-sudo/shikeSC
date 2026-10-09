@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="page-title">后台 · 商品管理</h2>
+
+<div class="admin-add" data-testid="admin-add-form">
+  <h3>添加商品</h3>
+  <form method="post" action="{{ url_for('admin_product_add') }}" class="grid-form">
+    <input type="text" name="name" placeholder="商品名称" data-testid="add-name" required>
+    <input type="text" name="category" placeholder="分类" data-testid="add-category" required>
+    <input type="number" name="price" placeholder="价格" step="0.01" min="0" data-testid="add-price" required>
+    <input type="number" name="stock" placeholder="库存" min="0" data-testid="add-stock" required>
+    <input type="text" name="image_url" placeholder="图片地址（可空）" data-testid="add-image">
+    <input type="text" name="description" placeholder="商品描述" data-testid="add-desc">
+    <button type="submit" class="btn-primary" data-testid="add-submit">添加</button>
+  </form>
+</div>
+
+<table class="table" data-testid="admin-products-table">
+  <thead><tr><th>ID</th><th>名称</th><th>分类</th><th>价格</th><th>库存</th><th>状态</th><th>操作</th></tr></thead>
+  <tbody>
+    {% for p in products %}
+    <tr data-testid="admin-product-row">
+      <td>{{ p['id'] }}</td>
+      <td>{{ p['name'] }}</td>
+      <td>{{ p['category'] }}</td>
+      <td>¥{{ '%.2f'|format(p['price']) }}</td>
+      <td>{{ p['stock'] }}</td>
+      <td>{{ '上架' if p['is_on_sale'] else '下架' }}</td>
+      <td>
+        <details class="admin-edit" data-testid="admin-edit">
+          <summary data-testid="edit-toggle">编辑</summary>
+          <form method="post" action="{{ url_for('admin_product_update', pid=p['id']) }}" class="grid-form">
+            <input type="text" name="name" value="{{ p['name'] }}" data-testid="edit-name">
+            <input type="text" name="category" value="{{ p['category'] }}" data-testid="edit-category">
+            <input type="number" name="price" value="{{ p['price'] }}" step="0.01" min="0" data-testid="edit-price">
+            <input type="number" name="stock" value="{{ p['stock'] }}" min="0" data-testid="edit-stock">
+            <input type="text" name="image_url" value="{{ p['image_url'] }}">
+            <input type="text" name="description" value="{{ p['description'] }}">
+            <label class="inline-label">上架
+              <input type="checkbox" name="is_on_sale" value="1" {{ 'checked' if p['is_on_sale'] }}>
+            </label>
+            <button type="submit" class="btn-mini" data-testid="edit-submit">保存</button>
+          </form>
+        </details>
+        <form method="post" action="{{ url_for('admin_product_delete', pid=p['id']) }}" class="inline-form">
+          <button type="submit" class="btn-mini btn-danger" data-testid="delete-product">删除</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
