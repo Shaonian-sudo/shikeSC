@@ -29,6 +29,17 @@ jobs:
           pip install -r testbuy-mall/requirements.txt
           pip install -r testbuy-framework/requirements.txt
 
+      - name: Install Chrome and chromedriver
+        run: |
+          wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
+          CHROME_VER=$(google-chrome --version | awk '{print $3}')
+          echo "Chrome version: ${CHROME_VER}"
+          wget -q "https://chromedriver.storage.googleapis.com/${CHROME_VER}/chromedriver_linux64.zip"
+          unzip -o chromedriver_linux64.zip -d /tmp/cd
+          sudo cp /tmp/cd/chromedriver /usr/local/bin/
+          chromedriver --version
+
       - name: Seed database and start app
         run: |
           cd testbuy-mall
