@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-card" data-testid="auth-card">
+  <h2>登录</h2>
+  <form method="post" data-testid="login-form">
+    <label>用户名
+      <input type="text" name="username" data-testid="login-username">
+    </label>
+    <label>密码
+      <input type="password" name="password" data-testid="login-password">
+    </label>
+    <button type="submit" class="btn-primary" data-testid="login-submit">登 录</button>
+  </form>
+  <p class="auth-tip">还没有账号？<a href="{{ url_for('register') }}" data-testid="go-register">去注册</a></p>
+</div>
+{% endblock %}

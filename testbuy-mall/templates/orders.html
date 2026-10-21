@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="page-title">我的订单</h2>
+{% if orders %}
+<table class="table" data-testid="orders-table">
+  <thead><tr><th>订单号</th><th>金额</th><th>状态</th><th>下单时间</th><th>操作</th></tr></thead>
+  <tbody>
+    {% for o in orders %}
+    <tr data-testid="order-row">
+      <td data-testid="order-no">{{ o['order_no'] }}</td>
+      <td>¥{{ '%.2f'|format(o['total_amount']) }}</td>
+      <td><span class="status" data-testid="order-status">{{ o['status'] }}</span></td>
+      <td>{{ o['created_at'] }}</td>
+      <td><a href="{{ url_for('order_detail', order_id=o['id']) }}" data-testid="order-detail-link">详情</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<div class="empty" data-testid="empty-orders">还没有订单</div>
+{% endif %}
+{% endblock %}

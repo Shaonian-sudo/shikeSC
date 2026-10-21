@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="detail" data-testid="product-detail">
+  <div class="detail-thumb" data-testid="product-thumb">{{ product['name'][0] }}</div>
+  <div class="detail-info">
+    <h1 data-testid="product-name">{{ product['name'] }}</h1>
+    <div class="p-category">{{ product['category'] }}</div>
+    <div class="p-price" data-testid="product-price">¥{{ '%.2f'|format(product['price']) }}</div>
+    <div class="p-stock" data-testid="product-stock">库存 {{ product['stock'] }}</div>
+    <p class="p-desc" data-testid="product-desc">{{ product['description'] }}</p>
+
+    <form method="post" action="{{ url_for('cart_add') }}" class="buy-form" data-testid="add-cart-form">
+      <input type="hidden" name="product_id" value="{{ product['id'] }}">
+      <label>数量
+        <input type="number" name="quantity" value="1" min="1" max="{{ product['stock'] }}"
+               data-testid="buy-quantity">
+      </label>
+      <button type="submit" class="btn-primary" data-testid="add-to-cart">加入购物车</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

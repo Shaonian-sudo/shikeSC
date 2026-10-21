@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero" data-testid="hero">
+  <h1 data-testid="hero-title">欢迎来到试客商城</h1>
+  <p>品质好物 · 现货速发 · 全流程自动化回归测试保障</p>
+</section>
+
+<div class="category-bar" data-testid="category-bar">
+  <a href="{{ url_for('index') }}" class="chip {{ 'chip-active' if not category }}">全部</a>
+  {% for c in categories %}
+    <a href="{{ url_for('index', category=c) }}" class="chip {{ 'chip-active' if c == category }}">{{ c }}</a>
+  {% endfor %}
+</div>
+
+<div class="product-grid" data-testid="product-grid">
+  {% for p in products %}
+    <a class="card" data-testid="product-card" href="{{ url_for('product_detail', pid=p['id']) }}">
+      <div class="thumb" data-testid="product-thumb">{{ p['name'][0] }}</div>
+      <div class="card-body">
+        <div class="p-name" data-testid="product-name">{{ p['name'] }}</div>
+        <div class="p-category">{{ p['category'] }}</div>
+        <div class="p-price" data-testid="product-price">¥{{ '%.2f'|format(p['price']) }}</div>
+        <div class="p-stock">库存 {{ p['stock'] }}</div>
+      </div>
+    </a>
+  {% else %}
+    <div class="empty" data-testid="empty-tip">没有找到相关商品</div>
+  {% endfor %}
+</div>
+
+{% if pages > 1 %}
+<div class="pager" data-testid="pager">
+  {% if page > 1 %}
+    <a href="{{ url_for('index', keyword=keyword, category=category, page=page-1) }}" data-testid="page-prev">上一页</a>
+  {% endif %}
+  <span class="page-info" data-testid="page-info">{{ page }} / {{ pages }}</span>
+  {% if page < pages %}
+    <a href="{{ url_for('index', keyword=keyword, category=category, page=page+1) }}" data-testid="page-next">下一页</a>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

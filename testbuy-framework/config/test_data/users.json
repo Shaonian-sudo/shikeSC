@@ -1,0 +1,32 @@
+[
+  {
+    "scenario": "正确账号密码登录",
+    "username": "buyer",
+    "password": "Test@123",
+    "expect": "success"
+  },
+  {
+    "scenario": "错误密码登录",
+    "username": "buyer",
+    "password": "wrong-pass",
+    "expect": "fail"
+  },
+  {
+    "scenario": "空用户名登录",
+    "username": "",
+    "password": "Test@123",
+    "expect": "fail"
+  },
+  {
+    "scenario": "空密码登录",
+    "username": "buyer",
+    "password": "",
+    "expect": "fail"
+  },
+  {
+    "scenario": "不存在的用户登录",
+    "username": "ghost_user",
+    "password": "whatever1",
+    "expect": "fail"
+  }
+]
