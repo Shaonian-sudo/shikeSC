@@ -61,6 +61,20 @@ testbuy-mall      被测系统（data-testid 测试标识，Selenium 驱动交�
 └── testbuy-framework/      # 测试框架（Selenium + pytest 四层架构）
 ```
 
+## 接口自动化测试
+
+除 Selenium UI 测试外，框架提供基于 `requests` 的接口自动化测试（`testbuy-framework/tests/test_api_flow.py`），直接调用被测系统 HTTP 接口，覆盖商品浏览与搜索、注册登录、会话权限控制、购物车、下单结算与订单管理。
+
+```
+# 被测系统运行中即可执行
+cd testbuy-framework
+pytest tests/test_api_flow.py -v --html=reports/report.html --self-contained-html
+```
+
+## 持续集成（CI）
+
+仓库使用 GitHub Actions 自动运行全部自动化测试（接口 + UI，无头模式）：push / PR 到 `main` 分支触发，流程为安装依赖 → 初始化数据并启动被测系统 → `pytest tests/` → 上传 HTML 测试报告（Artifact）。
+
 ## 说明
 
 - 浏览器驱动（chromedriver）需与本地 Chrome 版本匹配，下载后置于 `testbuy-framework/drivers/`。

@@ -1,0 +1,58 @@
+# 试客商城 TestBuy Mall · 持续集成（CI）
+# 触发：push / PR 到 main 分支
+# 流程：安装依赖 → 初始化数据并启动被测系统 → 运行全部自动化测试（接口 + UI）→ 上传测试报告
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      # UI 测试在 CI 无显示器环境运行，必须使用无头模式
+      TESTBUY_HEADLESS: "1"
+      # 自愈定位的 LLM 增强在 CI 中不启用（无 API Key），规则级回退链照常生效
+      TESTBUY_SELF_HEAL_LLM: "0"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          pip install -r testbuy-mall/requirements.txt
+          pip install -r testbuy-framework/requirements.txt
+
+      - name: Seed database and start app
+        run: |
+          cd testbuy-mall
+          python seed.py
+          nohup python app.py > /tmp/testbuy-app.log 2>&1 &
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:5000/ > /dev/null; then
+              echo "TestBuy Mall is ready"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "App failed to start, last log lines:"
+          tail -50 /tmp/testbuy-app.log
+          exit 1
+
+      - name: Run pytest (API + UI)
+        working-directory: testbuy-framework
+        run: |
+          python -m pytest tests/ -v --html=reports/report.html --self-contained-html
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pytest-report
+          path: testbuy-framework/reports/report.html

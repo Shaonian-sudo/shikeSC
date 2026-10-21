@@ -46,6 +46,7 @@ def create_driver(browser: str = BROWSER, headless: bool = HEADLESS):
     if headless:
         opts.add_argument("--headless=new")
         opts.add_argument("--disable-gpu")
+        opts.add_argument("--no-sandbox")  # CI 无头环境（root/受限沙箱）稳定性
 
     kwargs = {"options": opts}
     svc = _service(browser)
