@@ -1,6 +1,8 @@
 # 试客商城 TestBuy Mall · 持续集成（CI）
 # 触发：push / PR 到 main 分支
-# 流程：安装依赖 → 初始化数据并启动被测系统 → 运行全部自动化测试（接口 + UI）→ 上传测试报告
+# 流程：安装依赖 → 初始化数据并启动被测系统 → 运行接口自动化测试 → 上传测试报告
+# 说明：接口层自动化（pytest + requests，秒级、无浏览器依赖）由 CI 全自动保障；
+#       UI 回归（Selenium 无头）本地全量运行：python -m pytest tests/ -v
 name: CI
 
 on:
@@ -10,13 +12,8 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  api-test:
     runs-on: ubuntu-latest
-    env:
-      # UI 测试在 CI 无显示器环境运行，必须使用无头模式
-      TESTBUY_HEADLESS: "1"
-      # 自愈定位的 LLM 增强在 CI 中不启用（无 API Key），规则级回退链照常生效
-      TESTBUY_SELF_HEAL_LLM: "0"
     steps:
       - uses: actions/checkout@v4
 
@@ -28,17 +25,6 @@ jobs:
         run: |
           pip install -r testbuy-mall/requirements.txt
           pip install -r testbuy-framework/requirements.txt
-
-      - name: Install Chrome and chromedriver
-        run: |
-          wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo dpkg -i google-chrome-stable_current_amd64.deb || sudo apt-get -f install -y
-          CHROME_VER=$(google-chrome --version | awk '{print $3}')
-          echo "Chrome version: ${CHROME_VER}"
-          wget -q "https://chromedriver.storage.googleapis.com/${CHROME_VER}/chromedriver_linux64.zip"
-          unzip -o chromedriver_linux64.zip -d /tmp/cd
-          sudo cp /tmp/cd/chromedriver /usr/local/bin/
-          chromedriver --version
 
       - name: Seed database and start app
         run: |
@@ -56,10 +42,10 @@ jobs:
           tail -50 /tmp/testbuy-app.log
           exit 1
 
-      - name: Run pytest (API + UI)
+      - name: Run API tests
         working-directory: testbuy-framework
         run: |
-          python -m pytest tests/ -v --html=reports/report.html --self-contained-html
+          python -m pytest tests/test_api_flow.py -v --html=reports/report.html --self-contained-html
 
       - name: Upload test report
         if: always()

@@ -73,7 +73,9 @@ pytest tests/test_api_flow.py -v --html=reports/report.html --self-contained-htm
 
 ## 持续集成（CI）
 
-仓库使用 GitHub Actions 自动运行全部自动化测试（接口 + UI，无头模式）：push / PR 到 `main` 分支触发，流程为安装依赖 → 初始化数据并启动被测系统 → `pytest tests/` → 上传 HTML 测试报告（Artifact）。
+仓库使用 GitHub Actions 自动运行接口自动化测试：push / PR 到 `main` 分支触发，流程为安装依赖 → 初始化数据并启动被测系统 → `pytest tests/test_api_flow.py` → 上传 HTML 测试报告（Artifact）。
+
+> 分层策略：接口层自动化（requests，秒级、无浏览器依赖）由 CI 全自动保障；UI 回归（Selenium 无头）在本地全量运行（`pytest tests/`，接口 + UI 共 37 条用例一次跑完）。
 
 ## 说明
 
